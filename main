@@ -5,3 +5,7 @@ git commit -m "Initial commit: nickname checker system"
 git branch -M main
 git remote add origin https://github.com/nathanpan1210-del/nickname-checker.git
 git push -u origin main
+
+git add nicknames.xlsx
+git commit -m "Add initial nicknames data"
+git push
