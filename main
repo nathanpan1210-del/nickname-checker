@@ -1,0 +1,7 @@
+cd /home/node/.openclaw/workspace/name-roster
+
+# 添加远程仓库
+git remote add origin https://github.com/nathanpan1210-del/nickname-checker.git
+
+# 推送到GitHub
+git push -u origin main
