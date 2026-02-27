@@ -51,10 +51,6 @@ HTML_PAGE = '''
         #result.duplicate { background: #fee; color: #c00; border: 2px solid #fcc; }
         #result.similar { background: #fff3e0; color: #e65100; border: 2px solid #ffcc80; }
         #result.available { background: #e8f5e9; color: #2e7d32; border: 2px solid #a5d6a7; }
-        .tips {
-            margin-top: 20px; padding: 15px; background: #f5f5f5;
-            border-radius: 10px; font-size: 14px; color: #666;
-        }
     </style>
 </head>
 <body>
@@ -66,12 +62,6 @@ HTML_PAGE = '''
         </div>
         <button onclick="check()">查询花名</button>
         <div id="result"></div>
-        <div class="tips">
-            <strong>查重规则：</strong><br>
-            • 完全重复 → 花名重复，请重新取<br>
-            • 2字以上相似 → 花名相似，建议重取<br>
-            • 不重复不相似 → 花名可用
-        </div>
     </div>
     <script>
         async function check() {
