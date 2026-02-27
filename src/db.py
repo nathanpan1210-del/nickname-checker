@@ -1,10 +1,14 @@
 import pandas as pd
 import os
 
-EXCEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'nicknames.xlsx')
+# 使用绝对路径
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+EXCEL_PATH = os.path.join(BASE_DIR, 'data', 'nicknames.xlsx')
 
 def get_nicknames():
     """获取所有花名列表"""
+    if not os.path.exists(EXCEL_PATH):
+        return []
     df = pd.read_excel(EXCEL_PATH)
     # 假设有nickname列，取出所有非空花名
     if 'nickname' in df.columns:
@@ -53,5 +57,7 @@ def check_nickname(input_name):
 
 def get_all():
     """获取全部花名"""
+    if not os.path.exists(EXCEL_PATH):
+        return []
     df = pd.read_excel(EXCEL_PATH)
     return df.to_dict('records')
