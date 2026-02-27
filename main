@@ -1,0 +1,7 @@
+cd d:\workspace_nathan\NICKNAME_CHECKER
+git init
+git add .
+git commit -m "Initial commit: nickname checker system"
+git branch -M main
+git remote add origin https://github.com/nathanpan1210-del/nickname-checker.git
+git push -u origin main
