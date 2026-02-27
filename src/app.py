@@ -3,7 +3,6 @@ from .db import check_nickname, get_all
 
 app = Flask(__name__)
 
-# HTML前端页面
 HTML_PAGE = '''
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -30,79 +29,31 @@ HTML_PAGE = '''
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #666;
-            font-weight: 500;
-        }
+        h1 { text-align: center; color: #333; margin-bottom: 30px; font-size: 28px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #666; font-weight: 500; }
         input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            font-size: 18px;
-            transition: border-color 0.3s;
+            width: 100%; padding: 15px; border: 2px solid #eee;
+            border-radius: 10px; font-size: 18px;
         }
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+        input[type="text"]:focus { outline: none; border-color: #667eea; }
         button {
-            width: 100%;
-            padding: 15px;
+            width: 100%; padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
+            border: none; border-radius: 10px; color: white;
+            font-size: 18px; font-weight: 600; cursor: pointer;
         }
-        button:hover {
-            transform: translateY(-2px);
-        }
+        button:hover { transform: translateY(-2px); }
         #result {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            display: none;
+            margin-top: 30px; padding: 20px; border-radius: 10px;
+            text-align: center; font-size: 18px; font-weight: 600; display: none;
         }
-        #result.duplicate {
-            background: #fee;
-            color: #c00;
-            border: 2px solid #fcc;
-        }
-        #result.similar {
-            background: #fff3e0;
-            color: #e65100;
-            border: 2px solid #ffcc80;
-        }
-        #result.available {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 2px solid #a5d6a7;
-        }
+        #result.duplicate { background: #fee; color: #c00; border: 2px solid #fcc; }
+        #result.similar { background: #fff3e0; color: #e65100; border: 2px solid #ffcc80; }
+        #result.available { background: #e8f5e9; color: #2e7d32; border: 2px solid #a5d6a7; }
         .tips {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 10px;
-            font-size: 14px;
-            color: #666;
+            margin-top: 20px; padding: 15px; background: #f5f5f5;
+            border-radius: 10px; font-size: 14px; color: #666;
         }
     </style>
 </head>
@@ -122,43 +73,24 @@ HTML_PAGE = '''
             • 不重复不相似 → 花名可用
         </div>
     </div>
-
     <script>
         async function check() {
             const nickname = document.getElementById('nickname').value.trim();
-            if (!nickname) {
-                alert('请输入花名');
-                return;
-            }
-
+            if (!nickname) { alert('请输入花名'); return; }
             const result = document.getElementById('result');
-            result.style.display = 'block';
-            result.className = '';
-            result.innerHTML = '查询中...';
-
+            result.style.display = 'block'; result.className = ''; result.innerHTML = '查询中...';
             try {
                 const res = await fetch('/api/check', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({nickname})
                 });
                 const data = await res.json();
-
                 result.className = data.status;
                 result.innerHTML = data.message;
-
-                if (data.similar_to) {
-                    result.innerHTML += `<br><small>相似花名：${data.similar_to}</small>`;
-                }
-            } catch (e) {
-                result.innerHTML = '查询失败，请重试';
-            }
+                if (data.similar_to) result.innerHTML += `<br><small>相似花名：${data.similar_to}</small>`;
+            } catch (e) { result.innerHTML = '查询失败，请重试'; }
         }
-
-        // 回车键提交
-        document.getElementById('nickname').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') check();
-        });
+        document.getElementById('nickname').addEventListener('keypress', (e) => { if (e.key === 'Enter') check(); });
     </script>
 </body>
 </html>
@@ -166,12 +98,10 @@ HTML_PAGE = '''
 
 @app.route('/')
 def index():
-    """前端页面"""
     return render_template_string(HTML_PAGE)
 
 @app.route('/api/check', methods=['POST'])
 def check():
-    """查重API"""
     data = request.json
     nickname = data.get('nickname', '').strip()
     if not nickname:
@@ -181,7 +111,6 @@ def check():
 
 @app.route('/api/names', methods=['GET'])
 def get_names():
-    """获取所有花名"""
     return jsonify(get_all())
 
 if __name__ == '__main__':

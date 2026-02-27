@@ -3,7 +3,7 @@ import os
 
 # 使用绝对路径
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-EXCEL_PATH = os.path.join(BASE_DIR, 'data', 'nicknames.xlsx')
+EXCEL_PATH = os.path.join(BASE_DIR, 'nicknames.xlsx')
 
 def get_nicknames():
     """获取所有花名列表"""
