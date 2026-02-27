@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template_string
-from db import check_nickname, get_all
+from .db import check_nickname, get_all
 
 app = Flask(__name__)
 
